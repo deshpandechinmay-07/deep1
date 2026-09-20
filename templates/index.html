@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fertility Diagnosis Prediction</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9, #ffffff);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #1b5e20;
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .form-container {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+        }
+
+        .section-title {
+            color: #2e7d32;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.25);
+        }
+
+        .predict-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .predict-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 125, 50, 0.25);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>Fertility Diagnosis Prediction</h1>
+
+            <p>
+                Enter the required information to generate a model prediction
+            </p>
+
+        </div>
+
+
+        <div class="form-container">
+
+            <div class="section-title">
+                Patient Information
+            </div>
+
+
+            <form action="/predict" method="post">
+
+                <div class="form-grid">
+
+
+                    <!-- Season -->
+
+                    <div class="form-group">
+
+                        <label for="Season">
+                            Season
+                        </label>
+
+                        <select name="Season" id="Season" required>
+
+                            <option value="">Select Season</option>
+
+                            <option value="winter">
+                                Winter
+                            </option>
+
+                            <option value="spring">
+                                Spring
+                            </option>
+
+                            <option value="summer">
+                                Summer
+                            </option>
+
+                            <option value="fall">
+                                Fall
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Age -->
+
+                    <div class="form-group">
+
+                        <label for="Age">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="Age"
+                            name="Age"
+                            step="0.01"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Childish diseases -->
+
+                    <div class="form-group">
+
+                        <label for="Childish_diseases">
+                            Childish Diseases
+                        </label>
+
+                        <select
+                            name="Childish diseases"
+                            id="Childish_diseases"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="yes">
+                                Yes
+                            </option>
+
+                            <option value="no">
+                                No
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Accident -->
+
+                    <div class="form-group">
+
+                        <label for="Accident">
+                            Accident or Serious Trauma
+                        </label>
+
+                        <select
+                            name="Accident or serious trauma"
+                            id="Accident"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="yes">
+                                Yes
+                            </option>
+
+                            <option value="no">
+                                No
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Surgical intervention -->
+
+                    <div class="form-group">
+
+                        <label for="Surgery">
+                            Surgical Intervention
+                        </label>
+
+                        <select
+                            name="Surgical intervention"
+                            id="Surgery"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="yes">
+                                Yes
+                            </option>
+
+                            <option value="no">
+                                No
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- High fevers -->
+
+                    <div class="form-group">
+
+                        <label for="Fever">
+                            High Fevers in the Last Year
+                        </label>
+
+                        <select
+                            name="High fevers in the last year"
+                            id="Fever"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="no">
+                                No
+                            </option>
+
+                            <option value="less than 3 months ago">
+                                Less than 3 months ago
+                            </option>
+
+                            <option value="more than 3 months ago">
+                                More than 3 months ago
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Alcohol -->
+
+                    <div class="form-group">
+
+                        <label for="Alcohol">
+                            Frequency of Alcohol Consumption
+                        </label>
+
+                        <select
+                            name="Frequency of alcohol consumption"
+                            id="Alcohol"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="hardly ever or never">
+                                Hardly ever or never
+                            </option>
+
+                            <option value="once a week">
+                                Once a week
+                            </option>
+
+                            <option value="several times a week">
+                                Several times a week
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Smoking -->
+
+                    <div class="form-group">
+
+                        <label for="Smoking">
+                            Smoking Habit
+                        </label>
+
+                        <select
+                            name="Smoking habit"
+                            id="Smoking"
+                            required
+                        >
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="never">
+                                Never
+                            </option>
+
+                            <option value="occasional">
+                                Occasional
+                            </option>
+
+                            <option value="daily">
+                                Daily
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Sitting hours -->
+
+                    <div class="form-group full">
+
+                        <label for="Sitting">
+                            Number of Hours Spent Sitting per Day
+                        </label>
+
+                        <input
+                            type="number"
+                            id="Sitting"
+                            name="Number of hours spent sitting per day"
+                            step="0.01"
+                            min="0"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="predict-button"
+                >
+                    Predict Diagnosis
+                </button>
+
+            </form>
+
+
+            {% if prediction_text %}
+
+            <div class="result">
+
+                {{ prediction_text }}
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <div class="footer">
+
+            Machine Learning Prediction System
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
